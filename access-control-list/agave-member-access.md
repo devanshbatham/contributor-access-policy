@@ -1,4 +1,4 @@
-This is a page for keeping track of members with different levels of access to the Solana Labs monorepo.
+This is a page for keeping track of members with different levels of access to the Agave monorepo.
 
 | GitHub User    | Discord ID                       | Access Level |
 |----------------|----------------------------------|--------------|
