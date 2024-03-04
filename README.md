@@ -1,16 +1,15 @@
 ## Summary
 
-This document outlines the procedure for getting contributor access to various Solana Labs source code repositories and the Solana Tech Discord server.
+This document outlines the procedure for getting contributor access to various Anza source code repositories and the Solana Tech Discord server.
 
-Everyone is welcome to contribute to the Solana Labs codebase. Contributing doesn’t just mean submitting pull requests, 
+Everyone is welcome to contribute to the Agave codebase. Contributing doesn’t just mean submitting pull requests, 
 there are many different ways for you to get involved, including answering questions on Stack Exchange or Discord, and reporting or triaging bugs.
 
 #### Repositories
 
 Access is granted based on the repository you are interested in contributing to:
 
-1. The [Solana Program Library (SPL) repository](https://github.com/solana-labs/solana-program-library).
-2. The [Solana Labs monorepo](https://github.com/solana-labs/solana).
+1. The [Agave monorepo](https://github.com/anza-xyz/agave).
 
 #### Access Levels
 
@@ -43,8 +42,7 @@ Requirements: One voucher from any user with level 2 or above access to the resp
 
 Contributors with Triage access will have the associated [triage Github access
 policy](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/repository-roles-for-an-organization#permissions-for-each-role)
-for the [Solana Program Library](https://github.com/solana-labs/solana-program-library) (SPL) repository or the
-[Solana](https://github.com/solana-labs/solana) monorepo as well as access to Solana Labs' Buildkite CI.
+for the [Agave](https://github.com/anza-xyz/agave) monorepo as well as access to Anza's Buildkite CI.
 
 ### Level 2 - Write Access
 
@@ -52,8 +50,7 @@ Requirements: Two vouchers from anyone with level 2/3 access to the respective r
 
 Contributors with Write access will have the associated [write Github access
 policy](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/repository-roles-for-an-organization#permissions-for-each-role)
-for the [Solana Program Library](https://github.com/solana-labs/solana-program-library) (SPL) repository or the 
-[Solana](https://github.com/solana-labs/solana) monorepo.
+for the [Agave](https://github.com/anza-xyz/agave) monorepo.
 
 Most notably these permissions allow the contributor to approve and merge pull
 requests.
@@ -64,37 +61,20 @@ Requirements: Two vouchers from anyone with level 3 access to the respective rep
 
 Contributors with Maintain access will have the associated [maintain Github access
 policy](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/repository-roles-for-an-organization#permissions-for-each-role)
-for the [Solana Program Library](https://github.com/solana-labs/solana-program-library) (SPL) repository or the 
-[Solana](https://github.com/solana-labs/solana) monorepo.
+for the [Agave](https://github.com/anza-xyz/agave) monorepo.
 
 Users with Maintain access are responsible for managing the repositories and
 granting user access based on the above requirements.
 
-### Discord Access
-
-Any of the above access levels will grant you the Contributor role in the Solana Tech Discord server and a role tag with your current access level and the respective repository (e.g. SLP-Triage, Mono-Triage).
-
-If you are only interested in getting the Contributor role on Discord without requesting GitHub access, then you can request an existing Contributor to vouch for you in the #contributor-roles-requests channel. The requests should be made in the following format:
-
-```
-"I'd like to request the Contributor role for @USER"
-```
-
-If you'd like to request a role removal for an existing Contributor, you should do it in the #contributor-roles-requests channel and follow this format:
-
-```
-"I'd like to request Contributor role removal for @USER because [REASON]"
-```
-
 ### Vouching Process 
 
-To receive any access level to the SPL repository or the monorepo, follow these steps:
+To receive any access level to the [Agave](https://github.com/anza-xyz/agave) monorepo, follow these steps:
 
-1. Open an issue on the [Contributor Access Policy](https://github.com/solana-labs/contributor-access-policy) repository
-following the [templates for the respective access level](https://github.com/solana-labs/contributor-access-policy/issues/new/choose).
+1. Open an issue on the [Contributor Access Policy](https://github.com/anza-xyz/contributor-access-policy) repository
+following the [templates for the respective access level](https://github.com/anza-xyz/contributor-access-policy/issues/new/choose).
 2. Gather your vouchers to add a comment on the issue expressing their support.
 3. Once the issue has received enough support, notify a user with Maintain
-access to the respective repository by adding a comment tagging him. A list of members and their access levels can be found [here](https://github.com/solana-labs/contributor-access-policy/tree/master/access-control-list).
+access to the respective repository by adding a comment tagging them. A list of members and their access levels can be found [here](https://github.com/anza-xyz/contributor-access-policy/tree/master/access-control-list).
 4. It would take 3 business days for the request to be processed.
 
 **Note**: The vouching comments on the issue should be made in the following format:
@@ -107,7 +87,7 @@ access to the respective repository by adding a comment tagging him. A list of m
 
 In the event that a user requires their access to be removed, follow these steps:
 
-1. Open an issue on the [Contributor Access Policy](https://github.com/solana-labs/contributor-access-policy) repository
+1. Open an issue on the [Contributor Access Policy](https://github.com/anza-xyz/contributor-access-policy) repository
 with the title in the following format: "Revoke Access (Level X) for [Username]".
 2. Other users with the appropriate level of access should comment on the issue
 to express their support for the removal of access.
