@@ -1,0 +1,73 @@
+name: update-acl
+
+on:
+  workflow_call:
+    inputs:
+      github_handle:
+        required: true
+        type: string
+      discord_handle:
+        required: true
+        type: string
+      repository:
+        required: true
+        type: string
+      privilege:
+        required: true
+        type: string
+    secrets:
+      PAT:
+        required: true
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - shell: bash
+        run: |
+          set -e
+
+          file_path=
+          case `echo "${{ inputs.repository }}" | sed -e 's/^[[:space:]]*//'` in
+            "Agave Monorepo")
+              file_path=access-control-list/agave-member-access.md
+            ;;
+            *)
+              echo "unexpected repositroy: ${{ inputs.repository }}"
+              exit 1
+            ;;
+          esac
+
+          case ${{ inputs.privilege }} in
+            "Triage")
+              echo "| ${{ inputs.github_handle }} | ${{ inputs.discord_handle }} | 1 |" >> $file_path
+            ;;
+            "Write")
+              sed -i -e 's/|\(.*${{ inputs.github_handle }}.*\)|\(.*${{ inputs.discord_handle }}.*\)|\(.*\)|/|\1|\2| 2 |/g' $file_path
+            ;;
+            *)
+              echo "unexpected privilege: ${{ inputs.privilege }}"
+              exit 1
+            ;;
+          esac
+
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add "$file_path"
+          git commit -m "update acl"
+          git push
+
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ["access-control-list"]
+            })

@@ -1,0 +1,133 @@
+name: on-board
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  link_to_issue:
+    if: github.event.label.name == 'CI'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            })
+
+  parse_info:
+    needs: link_to_issue
+    runs-on: ubuntu-latest
+    outputs:
+      github_handle: ${{ steps.main.outputs.github_handle }}
+      discord_handle: ${{ steps.main.outputs.discord_handle }}
+      team_slug: ${{ steps.main.outputs.team_slug }}
+      previous_team_slug: ${{ steps.main.outputs.previous_team_slug }}
+      privilege: ${{ steps.main.outputs.privilege }}
+      repository: ${{ steps.main.outputs.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: main
+        shell: bash
+        run: |
+          set -e
+
+          source .github/scripts/parse-issue-title.sh "${{ github.event.issue.title }}"
+          source .github/scripts/parse-issue-body.sh "${{ github.event.issue.body }}"
+          source .github/scripts/get-team-slug.sh "$PRIVILEGE" "$REPOSITORY"
+
+          echo "github_handle=$GITHUB_HANDLE" >> $GITHUB_OUTPUT
+          echo "discord_handle=$DISCORD_HANDLE" >> $GITHUB_OUTPUT
+          echo "team_slug=$TEAM_SLUG" >> $GITHUB_OUTPUT
+          echo "previous_team_slug=$PREVIOUS_TEAM_SLUG" >> $GITHUB_OUTPUT
+          echo "privilege=$PRIVILEGE" >> $GITHUB_OUTPUT
+          echo "repository=$REPOSITORY" >> $GITHUB_OUTPUT
+
+          case $TEAM_SLUG in
+            *monorepo*)
+              maintainers=(
+                "CriesofCarrots"
+                "joeaba"
+                "t-nelson"
+                "sakridge"
+                "yihau"
+              )
+              if [[ ! " ${maintainers[*]} " =~ " ${{github.event.sender.login}} " ]]; then
+                echo "isn't a maintainer in monorepo"
+                exit 1
+              fi
+            ;;
+            *)
+              echo "unexpected team slug: $TEAM_SLUG"
+              exit 1
+            ;;
+          esac
+
+  add_to_github_group:
+    needs: [parse_info]
+    uses: ./.github/workflows/add-to-github-group.yml
+    with:
+      team_slug: ${{ needs.parse_info.outputs.team_slug }}
+      previous_team_slug: ${{ needs.parse_info.outputs.previous_team_slug }}
+      github_handle: ${{ needs.parse_info.outputs.github_handle }}
+    secrets:
+      PAT: ${{ secrets.PAT }}
+
+  update_acl:
+    needs: [parse_info]
+    uses: ./.github/workflows/update-acl.yml
+    with:
+      github_handle: ${{ needs.parse_info.outputs.github_handle }}
+      discord_handle: ${{ needs.parse_info.outputs.discord_handle }}
+      repository: ${{ needs.parse_info.outputs.repository }}
+      privilege: ${{ needs.parse_info.outputs.privilege }}
+    secrets:
+      PAT: ${{ secrets.PAT }}
+
+  on_success:
+    needs:
+      - add_to_github_group
+      - update_acl
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ["approved"]
+            })
+            github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              state_reasonstring: 'completed'
+            })
+
+  remove_ci_label:
+    if: ${{ always() }}
+    needs:
+      - add_to_github_group
+      - update_acl
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              name: "CI"
+            })
