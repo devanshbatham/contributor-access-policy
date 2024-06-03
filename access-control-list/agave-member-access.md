@@ -49,3 +49,4 @@ This is a page for keeping track of members with different levels of access to t
 | rexstjohn-anza | infamous_iron_chef | 1 |
 | fanatid | fanatid | 1 |
 | kevinheavey | legalizeonionfutures | 1 |
+| febo | 0xfebo | 1 |
