@@ -1,6 +1,6 @@
 name: Monorepo Write Access Request
 description: Issue template to request Write access to the Agave Monorepo
-title: "Request Write access for [User] to the Agave Monorepo"
+title: "Request Write access for _GITHUB_USERNAME_ to the Agave Monorepo"
 labels: ["access"]
 assignees:
   - joeaba
@@ -13,7 +13,7 @@ body:
     attributes:
       value: |
         Please complete the following information to proceed with your access request,
-        make sure to update [User] with your GitHub username in the issue title:
+        make sure to update _GITHUB_USERNAME_ with your GitHub username in the issue title:
   - type: input
     id: username
     attributes:
