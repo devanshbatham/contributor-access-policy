@@ -51,3 +51,4 @@ This is a page for keeping track of members with different levels of access to t
 | kevinheavey | legalizeonionfutures | 1 |
 | febo | 0xfebo | 1 |
 | fkouteib | pegasus360 | 2 |
+| cpubot | cpubot | 1 |
