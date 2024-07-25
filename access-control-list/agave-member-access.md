@@ -52,3 +52,4 @@ This is a page for keeping track of members with different levels of access to t
 | febo | 0xfebo | 1 |
 | fkouteib | pegasus360 | 2 |
 | cpubot | cpubot | 2 |
+| ksolana | movllvm | 1 |
