@@ -54,3 +54,4 @@ This is a page for keeping track of members with different levels of access to t
 | cpubot | cpubot | 2 |
 | ksolana | movllvm | 2 |
 | sam0x17 | sam0x17 | 2 |
+| alexpyattaev | Alex[HeadHunter]#2126 | 1 |
